@@ -2,6 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<packaging>pom</packaging>
+	<modules>
+		<module>findany-core-log</module>
+		<module>findany-core-tool</module>
+		<module>findany-tool-test</module>
+		<module>findany-core-mybatis</module>
+		<module>findany-core-codegen</module>
+		<module>findany-core-boot</module>
+		<module>findany-core-auth</module>
+		<module>findany-core-cloud</module>
+		<module>findany-core-launch</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -13,19 +25,122 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>find-any-tool</name>
 	<description>包含一切的工具包</description>
+
 	<properties>
+		<findany.tool.version>1.0.0-SNAPSHOT</findany.tool.version>
+
 		<java.version>1.8</java.version>
+		<maven.plugin.version>3.8.0</maven.plugin.version>
+		<swagger.version>2.10.5</swagger.version>
+		<swagger.models.version>1.6.2</swagger.models.version>
+		<knife4j.version>2.0.8</knife4j.version>
+		<mybatis.plus.version>3.4.2</mybatis.plus.version>
+		<mybatis.plus.generator.version>3.4.1</mybatis.plus.generator.version>
+		<protostuff.version>1.6.0</protostuff.version>
+		<disruptor.version>3.4.2</disruptor.version>
+		<spring.boot.admin.version>2.3.1</spring.boot.admin.version>
+		<mica.auto.version>1.2.5</mica.auto.version>
+		<alibaba.cloud.version>2.2.5.RC2</alibaba.cloud.version>
+		<alibaba.seata.version>1.4.1</alibaba.seata.version>
+		<spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
+
+		<spring.boot.version>2.4.3</spring.boot.version>
+		<spring.cloud.version>2020.0.1</spring.cloud.version>
+		<spring.platform.version>Cairo-SR8</spring.platform.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.plugin</groupId>
+				<artifactId>spring-plugin-core</artifactId>
+				<version>${spring.plugin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.plugin</groupId>
+				<artifactId>spring-plugin-metadata</artifactId>
+				<version>${spring.plugin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.spring.platform</groupId>
+				<artifactId>platform-bom</artifactId>
+				<version>${spring.platform.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
+		<!--Spring-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.2.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>net.dreamlu</groupId>
+			<artifactId>mica-auto</artifactId>
+			<version>${mica.auto.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
